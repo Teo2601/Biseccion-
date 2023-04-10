@@ -1,0 +1,43 @@
+from prettytable import PrettyTable
+
+def f(x):
+    return x**3 - 2*x - 5  # función f(x)
+
+def biseccion(a, b, tol, max_iter):
+    # Inicialización de variables
+    iteracion = 1
+    error = tol + 1
+    c = (a + b) / 2
+    
+    # Crear tabla
+    table = PrettyTable()
+    table.field_names = ["Iteración", "a", "b", "c", "f(c)", "error"]
+    
+    # Iteración del método de la bisección
+    while f(c) != 0 and error > tol and iteracion <= max_iter:
+        if f(a)*f(c) < 0:
+            b = c
+        else:
+            a = c
+        c_anterior = c
+        c = (a + b) / 2
+        error = abs((c - c_anterior) / c)
+        
+        # Agregar fila a la tabla
+        table.add_row([iteracion, a, b, c, f(c), error])
+        
+        iteracion += 1
+    
+    # Imprimir la tabla
+    print(table)
+
+    # Retornar el valor de c como resultado
+    return c
+
+# Ejemplo de uso
+a = 1
+b = 3
+tol = 0.01
+max_iter = 100
+resultado = biseccion(a, b, tol, max_iter)
+print("El resultado de la bisección es: ", resultado)
